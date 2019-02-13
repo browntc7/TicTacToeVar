@@ -2,6 +2,8 @@ package edu.apsu.csci.games.tictactoevar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,8 @@ public class SecondActivity extends Activity implements View.OnClickListener {
     private boolean player1Turn = true;
 
     private int roundCount;
+
+    private String currentPiece = "";
 
     private int player1Points;
     private int player2Points;
@@ -30,6 +34,14 @@ public class SecondActivity extends Activity implements View.OnClickListener {
         textViewPlayer1 = findViewById(R.id.text_view_p1);
         textViewPlayer2 = findViewById(R.id.text_view_p2);
 
+        if(player1Turn){
+            textViewPlayer1.setTextColor(Color.BLUE);
+            textViewPlayer2.setTextColor(Color.BLACK);
+        } else {
+            textViewPlayer1.setTextColor(Color.BLACK);
+            textViewPlayer2.setTextColor(Color.BLUE);
+        }
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String buttonID = "button_" + i + j;
@@ -38,6 +50,22 @@ public class SecondActivity extends Activity implements View.OnClickListener {
                 buttons[i][j].setOnClickListener(this);
             }
         }
+
+        Button button_s = findViewById(R.id.btn_select_s);
+        button_s.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentPiece = "S";
+            }
+        });
+
+        Button button_o = findViewById(R.id.btn_select_o);
+        button_o.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentPiece = "O";
+            }
+        });
 
         Button buttonReset = findViewById(R.id.button_reset);
         buttonReset.setOnClickListener(new View.OnClickListener() {
@@ -67,25 +95,45 @@ public class SecondActivity extends Activity implements View.OnClickListener {
             return;
         }
 
-        if (player1Turn) {
-            ((Button) v).setText("X");
+ /*       if (player1Turn) {
+            ((Button) v).setText("S");
         } else {
             ((Button) v).setText("O");
+        }*/
+
+
+/*
+        if(v.getId() == R.id.btn_select_o){
+            currentPiece = "S";
+        }
+
+        if(v.getId() == R.id.btn_select_s){
+            currentPiece = "O";
+        }
+*/
+
+        ((Button) v).setText(currentPiece);
+
+
+        if(checkForWin() && player1Turn){
+            player1Wins();
+        } else if (checkForWin() && !player1Turn){
+            player2Wins();
+        } else if (roundCount == 9){
+            draw();
+        } else {
+            player1Turn = !player1Turn;
+            if(player1Turn){
+                textViewPlayer1.setTextColor(Color.BLUE);
+                textViewPlayer2.setTextColor(Color.BLACK);
+            } else {
+                textViewPlayer1.setTextColor(Color.BLACK);
+                textViewPlayer2.setTextColor(Color.BLUE);
+            }
         }
 
         roundCount++;
 
-        if (checkForWin()) {
-            if (player1Turn) {
-                player1Wins();
-            } else {
-                player2Wins();
-            }
-        } else if (roundCount == 9) {
-            draw();
-        } else {
-            player1Turn = !player1Turn;
-        }
 
     }
 
@@ -98,31 +146,29 @@ public class SecondActivity extends Activity implements View.OnClickListener {
             }
         }
 
-        for (int i = 0; i < 3; i++) {
-            if (field[i][0].equals(field[i][1])
-                    && field[i][0].equals(field[i][2])
-                    && !field[i][0].equals("")) {
+        if(field[1][1].equals("S")){
+            draw();
+        }
+
+        // check for horizontal win
+        for(int i = 0; i < 3; i++) {
+            if (field[i][0].equals("S") && field[i][1].equals("O") && field[i][2].equals("S")){
                 return true;
             }
         }
 
-        for (int i = 0; i < 3; i++) {
-            if (field[0][i].equals(field[1][i])
-                    && field[0][i].equals(field[2][i])
-                    && !field[0][i].equals("")) {
+        // check for vertical win
+        for(int i = 0; i < 3; i++) {
+            if (field[0][i].equals("S") && field[1][i].equals("O") && field[2][i].equals("S")){
                 return true;
             }
         }
 
-        if (field[0][0].equals(field[1][1])
-                && field[0][0].equals(field[2][2])
-                && !field[0][0].equals("")) {
+        // check for diag win
+        if(field[0][0].equals("S") && field[1][1].equals("O") && field[2][2].equals("S")){
             return true;
         }
-
-        if (field[0][2].equals(field[1][1])
-                && field[0][2].equals(field[2][0])
-                && !field[0][2].equals("")) {
+        if(field[0][2].equals("S") && field[1][1].equals("O") && field[2][0].equals("S")){
             return true;
         }
 
