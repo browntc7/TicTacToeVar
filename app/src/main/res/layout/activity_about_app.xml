@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AboutApp"
+    android:background="@drawable/bandwidth">
+
+
+    <TextView
+        android:id="@+id/appinfo_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80ffffff"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:textColor="#000000" />
+
+</LinearLayout>

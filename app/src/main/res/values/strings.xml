@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Tic Tac Toe Var</string>
+    <string name="play_button">Play Revenge 3-In-A-Row!</string>
+    <string name="play2_button">Play S.O.S.!</string>
+    <string name="welcome_textView">Welcome To  Tic-Tac-Toe Variations!</string>
+    <string name="about_button">about_button</string>
+    <string name="appinfo_textView">about</string>
+</resources>
